@@ -28,7 +28,7 @@ public:
         return 0;
     }
 
-    push( Student s ){
+    void push( Student s ){
         Node* temp = new Node();
         temp->s = s;
 
@@ -68,10 +68,27 @@ public:
                 temp = tos;
                 while (temp != NULL) {
                     cout << temp->s.id << "-> " << temp->s.name << endl;;
-                temp = temp->prev;
+                    temp = temp->prev;
                 }
             }
-}
+    }
+
+    stackClass( stackClass & s ){
+        tos = NULL;
+        Node* temp = new Node();
+        temp = s.tos;
+        while ( temp != NULL ){
+            this->push( temp->s );
+            temp = temp->prev;
+        }
+        delete temp;
+
+    }
+
+    ~stackClass(){
+        delete tos;
+        cout << "object destructed" << endl;
+    }
 
 };
 
@@ -93,6 +110,7 @@ int main()
     myStack.display();
     myStack.pop(z);
     cout << "student " << z.name << " with id " << z.id << " was popped out of stack." << endl;
-    myStack.display();
+    stackClass stack1(myStack);
+    stack1.display();
     return 0;
 }
